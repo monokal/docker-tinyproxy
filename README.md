@@ -20,7 +20,13 @@ Usage:
 
 ##### Monitoring the proxy
 
+###### Logs
+---
 `docker logs -f tinyproxy` will display a following tail of `/var/log/tinyproxy/tinyproxy.log`
+
+###### Stats
+---
+Navigating to `http://tinyproxy.stats/` while connected to the proxy will display the Tinyproxy Stats page.
 
 ### Find it on Docker Hub
 ---
