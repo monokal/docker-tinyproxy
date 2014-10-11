@@ -1,16 +1,16 @@
 #!/bin/bash
 
 ###############################################################################
-# Name: run.sh
-# Author:   Daniel Middleton <daniel-middleton.com>
-# Description: Used as ENTRYPOINT from Tinyproxy's Dockerfile
-# Usage: See displayUsage
+# Name:         run.sh
+# Author:       Daniel Middleton <daniel-middleton.com>
+# Description:  Used as ENTRYPOINT from Tinyproxy's Dockerfile
+# Usage:        See displayUsage function
 ###############################################################################
 
 # Global vars
 PROG_NAME='DockerTinyproxy'
-TAIL_LOG='/var/log/tinyproxy/tinyproxy.log'
 PROXY_CONF='/etc/tinyproxy.conf'
+TAIL_LOG='/var/log/tinyproxy/tinyproxy.log'
 
 # Usage: screenOut STATUS message
 screenOut() {
@@ -44,7 +44,6 @@ checkStatus() {
     esac
 }
 
-# Functions
 displayUsage() {
     echo
     echo '  Usage:'
@@ -97,7 +96,7 @@ tailLog() {
     screenOut "Tailing Tinyproxy log..."
     tail -f $TAIL_LOG
     checkStatus $? "Could not tail $TAIL_LOG" \
-                   "Stopped tailing $TAIL_LOG. Exiting..."
+                   "Stopped tailing $TAIL_LOG"
 }
 
 # Start execution
