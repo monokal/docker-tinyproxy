@@ -1,6 +1,14 @@
 # docker-tinyproxy
 A quick and easy Dockerised Tinyproxy.
 
+### Find it on GitHub
+---
+https://github.com/daniel-middleton/docker-tinyproxy
+
+### Find it on DockerHub
+---
+https://registry.hub.docker.com/u/dannydirect/tinyproxy/
+
 ### Usage
 ---
 ##### Running a new Tinyproxy container
@@ -27,10 +35,6 @@ Usage:
 ###### Stats
 ---
 Navigating to `http://tinyproxy.stats/` while connected to the proxy will display the Tinyproxy Stats page.
-
-### Find it on Docker Hub
----
-https://registry.hub.docker.com/u/dannydirect/tinyproxy/
 
 ### Contribute
 ---
