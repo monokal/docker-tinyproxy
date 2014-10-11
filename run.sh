@@ -79,6 +79,20 @@ parseAccessRules() {
     echo "$list" | sed 's/.\{2\}$//'
 }
 
+setMiscConfig() {
+    sed -i -e"s,^MinSpareServers ,MinSpareServers\t1 ," $PROXY_CONF
+    checkStatus $? "Set MinSpareServers - Could not edit $PROXY_CONF" \
+                   "Set MinSpareServers - Edited $PROXY_CONF successfully."
+
+    sed -i -e"s,^MaxSpareServers ,MaxSpareServers\t1 ," $PROXY_CONF
+    checkStatus $? "Set MinSpareServers - Could not edit $PROXY_CONF" \
+                   "Set MinSpareServers - Edited $PROXY_CONF successfully."
+    
+    sed -i -e"s,^StartServers ,StartServers\t1 ," $PROXY_CONF
+    checkStatus $? "Set MinSpareServers - Could not edit $PROXY_CONF" \
+                   "Set MinSpareServers - Edited $PROXY_CONF successfully."
+}
+
 setAccess() {
     if [[ "$1" == *ANY* ]]; then
         sed -i -e"s/^Allow /#Allow /" $PROXY_CONF
@@ -118,10 +132,6 @@ stopService
 export rawRules="$@" && parsedRules=$(parseAccessRules $rawRules) && unset rawRules
 # Set ACL in Tinyproxy config
 setAccess $parsedRules
-# Debug: Print Tinyproxy config
-echo && echo && echo '##################### Tinyproxy Config #####################'
-cat $PROXY_CONF
-echo '############################################################' && echo && echo
 # Start Tinyproxy
 startService
 # Tail Tinyproxy log
