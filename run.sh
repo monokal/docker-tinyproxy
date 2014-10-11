@@ -3,8 +3,8 @@
 ###############################################################################
 # Name: run.sh
 # Author:   Daniel Middleton <daniel-middleton.com>
-# Description: Used as CMD from Tinyproxy Dockerfile
-# Usage: run.sh <Allowed_IP> <Proxy_Port>
+# Description: Used as ENTRYPOINT from Tinyproxy's Dockerfile
+# Usage: See displayUsage
 ###############################################################################
 
 # Global vars
