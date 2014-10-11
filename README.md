@@ -10,7 +10,7 @@ Usage:
     docker run -d --name='tinyproxy' -p <Host_Port>:8888 dannydirect/tinyproxy:latest <ACL>
 
         - Set <Host_Port> to the port you wish the proxy to be accessible from.
-        - Set <ACL> to 'ANY' to allow unrestricted proxy access, or one or more spece seperated IP/CIDR addresses for tighter security.
+        - Set <ACL> to 'ANY' to allow unrestricted proxy access, or one or more space seperated IP/CIDR addresses for tighter security.
 
     Examples:
         docker run -d --name='tinyproxy' -p 6666:8888 dannydirect/tinyproxy:latest ANY
