@@ -1,7 +1,9 @@
 # docker-tinyproxy
+---
 A quick and easy Dockerised Tinyproxy.
 
 ### Usage
+---
 Running a new Tinyproxy container
 
 ```
@@ -16,7 +18,9 @@ Monitoring the proxy
 `docker logs -f tinyproxy` will display a following tail of `/var/log/tinyproxy/tinyproxy.log`
 
 ### Find it on Docker Hub
+---
 https://registry.hub.docker.com/u/dannydirect/tinyproxy/
 
 ### Contribute
+---
 As always, contributions are appriciated. Simply open a Pull request.
