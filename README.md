@@ -2,6 +2,7 @@
 A quick and easy Dockerised Tinyproxy.
 
 ### Find it on GitHub
+---
 https://github.com/daniel-middleton/docker-tinyproxy
 
 ### Find it on DockerHub
