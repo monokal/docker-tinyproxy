@@ -38,8 +38,7 @@ checkStatus() {
             exit 1
             ;;
         *)
-            screenOut "ERROR" "Error in checkStatus function. Exiting..."
-            exit 1
+            screenOut "ERROR" "Unrecognised return code."
             ;;
     esac
 }
@@ -47,10 +46,15 @@ checkStatus() {
 displayUsage() {
     echo
     echo '  Usage:'
-    echo "      docker run -d --name='tinyproxy' -p <Host_Port>:8888 dannydirect/tinyproxy:latest '<Allowed_IP>'"
+    echo "      docker run -d --name='tinyproxy' -p <Host_Port>:8888 dannydirect/tinyproxy:latest <ACL>"
     echo
     echo "      - Set <Host_Port> to the port you wish the proxy to be accessible from."
-    echo "      - Set <Allowed_IP> to 'ANY' to allow unrestricted proxy access, or a specific IP/CIDR for tighter security."
+    echo "      - Set <ACL> to 'ANY' to allow unrestricted proxy access, or one or more spece seperated IP/CIDR addresses for tighter security."
+    echo
+    echo "      Examples:"
+    echo "          docker run -d --name='tinyproxy' -p 6666:8888 dannydirect/tinyproxy:latest ANY"
+    echo "          docker run -d --name='tinyproxy' -p 7777:8888 dannydirect/tinyproxy:latest 87.115.60.124"
+    echo "          docker run -d --name='tinyproxy' -p 8888:8888 dannydirect/tinyproxy:latest 10.103.0.100/24 192.168.1.22/16"
     echo
 }
 
@@ -67,23 +71,26 @@ stopService() {
     fi
 }
 
-setAccess() {
-    if [ "$1" = 'ANY' ]; then
-        sed -i -e"s/^Allow /#Allow /" $PROXY_CONF
-        checkStatus $? "Setting Allowed IPs - Could not edit $PROXY_CONF" \
-                       "Setting Allowed IPs - Edited $PROXY_CONF successfully."
-    else
-        sed -i "s/^Allow.*/Allow $1/" $PROXY_CONF
-        checkStatus $? "Setting Allowed IPs - Could not edit $PROXY_CONF" \
-                       "Setting Allowed IPs - Edited $PROXY_CONF successfully."
-    fi
+parseAccessRules() {
+    list=''
+    for ARG in $@; do
+        line="Allow\t$ARG\n"
+        list+=$line
+    done
+    echo "$list" | sed 's/.\{2\}$//'
 }
 
-#setPort() {
-#    sed -i "s/^Port.*/Port $1/" $PROXY_CONF
-#    checkStatus $? "Setting Port - Could not edit $PROXY_CONF" \
-#                   "Setting Port - Edited $PROXY_CONF successfully."
-#}
+setAccess() {
+    if [[ "$1" == *ANY* ]]; then
+        sed -i -e"s/^Allow /#Allow /" $PROXY_CONF
+        checkStatus $? "Allowing ANY - Could not edit $PROXY_CONF" \
+                       "Allowed ANY - Edited $PROXY_CONF successfully."
+    else
+        sed -i "s,^Allow 127.0.0.1,$1," $PROXY_CONF
+        checkStatus $? "Allowing IPs - Could not edit $PROXY_CONF" \
+                       "Allowed IPs - Edited $PROXY_CONF successfully."
+    fi
+}
 
 startService() {
     screenOut "Starting Tinyproxy service..."
@@ -106,10 +113,19 @@ if [ "$#" -lt 1 ]; then
 fi
 
 echo && screenOut "$PROG_NAME script started..."
-
 stopService
-setAccess $1
-#setPort $2
+export rawRules="$@" && parsedRules=$(parseAccessRules $rawRules) && unset rawRules
+echo '----------------------------------'
+echo $parsedRules
+echo '----------------------------------'
+setAccess $parsedRules
+
+echo
+echo '##################################'
+cat $PROXY_CONF
+echo '##################################'
+echo
+
 startService
 tailLog
 
