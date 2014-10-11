@@ -1,4 +1,4 @@
-# docker-tinyproxy ![alt text](https://raw.githubusercontent.com/daniel-middleton/docker-tinyproxy/master/other/banu_logo.png "Banu!")
+![alt text](https://raw.githubusercontent.com/daniel-middleton/docker-tinyproxy/master/other/banu_logo.png "Banu!") # docker-tinyproxy
 A quick and easy Dockerised Tinyproxy.
 
 ### Find it on GitHub
