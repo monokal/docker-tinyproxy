@@ -26,13 +26,13 @@ Usage:
         docker run -d --name='tinyproxy' -p 8888:8888 dannydirect/tinyproxy:latest 10.103.0.100/24 192.168.1.22/16
 ```
 
-##### Monitoring the proxy
+### Monitoring the proxy
 
-###### Logs
+##### Logs
 ---
 `docker logs -f tinyproxy` will display a following tail of `/var/log/tinyproxy/tinyproxy.log`
 
-###### Stats
+##### Stats
 ---
 Navigating to `http://tinyproxy.stats/` while connected to the proxy will display the Tinyproxy Stats page.
 
