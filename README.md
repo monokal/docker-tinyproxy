@@ -3,7 +3,7 @@ A quick and easy Dockerised Tinyproxy.
 
 ### Find it on GitHub
 ---
-https://github.com/daniel-middleton/docker-tinyproxy
+https://github.com/daniel-middleton/docker-tinyproxy ![alt text](https://raw.githubusercontent.com/daniel-middleton/docker-tinyproxy/master/other/banu.png "Banu!")
 
 ### Find it on DockerHub
 ---
