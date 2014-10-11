@@ -60,7 +60,6 @@ displayUsage() {
 
 stopService() {
     screenOut "Checking for running Tinyproxy service..."
-    
     if [ "$(pidof tinyproxy)" ]; then
         screenOut "Found. Stopping Tinyproxy service for pre-configuration..."
         service tinyproxy stop
@@ -106,27 +105,27 @@ tailLog() {
                    "Stopped tailing $TAIL_LOG"
 }
 
-# Start execution
+# Check args
 if [ "$#" -lt 1 ]; then
     displayUsage
     exit 1
 fi
-
+# Start script
 echo && screenOut "$PROG_NAME script started..."
+# Stop Tinyproxy if running
 stopService
+# Parse ACL from args
 export rawRules="$@" && parsedRules=$(parseAccessRules $rawRules) && unset rawRules
-echo '----------------------------------'
-echo $parsedRules
-echo '----------------------------------'
+# Set ACL in Tinyproxy config
 setAccess $parsedRules
-
-echo
-echo '##################################'
+# Debug: Print Tinyproxy config
+echo && echo && echo '##################### Tinyproxy Config #####################'
 cat $PROXY_CONF
-echo '##################################'
-echo
-
+echo '############################################################' && echo && echo
+# Start Tinyproxy
 startService
+# Tail Tinyproxy log
 tailLog
-
+# End
 screenOut "$PROG_NAME script ended." && echo
+exit 0
