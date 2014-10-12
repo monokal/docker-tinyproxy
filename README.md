@@ -1,11 +1,11 @@
 # Docker Tinyproxy ![alt text](https://raw.githubusercontent.com/daniel-middleton/docker-tinyproxy/master/other/banu_logo.png "Banu!")
 A quick and easy Dockerised Tinyproxy with configurable ACL.
 
-### Find it on GitHub
+##### Find it on GitHub
 ---
 https://github.com/daniel-middleton/docker-tinyproxy
 
-### Find it on DockerHub
+##### Find it on DockerHub
 ---
 https://registry.hub.docker.com/u/dannydirect/tinyproxy/
 
