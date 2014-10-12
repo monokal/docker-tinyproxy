@@ -5,7 +5,7 @@
 # Usage:        docker build -t dannydirect/tinyproxy:latest .
 ###############################################################################
 
-FROM ubuntu:latest
+FROM phusion/baseimage:latest
 
 MAINTAINER Daniel Middleton <daniel-middleton.com>
 
