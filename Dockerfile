@@ -5,12 +5,15 @@
 # Usage:        docker build -t dannydirect/tinyproxy:latest .
 ###############################################################################
 
-FROM phusion/baseimage:latest
+FROM alpine:latest
 
 MAINTAINER Daniel Middleton <daniel-middleton.com>
 
-ADD run.sh /opt/docker-tinyproxy/run.sh
+RUN apk update \
+    && apk add \
+	bash \
+	tinyproxy
 
-RUN apt-get update && apt-get -y upgrade && apt-get -y install tinyproxy
+ADD run.sh /opt/docker-tinyproxy/run.sh
 
 ENTRYPOINT ["/opt/docker-tinyproxy/run.sh"]
