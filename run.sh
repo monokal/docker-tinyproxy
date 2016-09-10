@@ -9,7 +9,7 @@
 
 # Global vars
 PROG_NAME='DockerTinyproxy'
-PROXY_CONF='/etc/tinyproxy.conf'
+PROXY_CONF='/etc/tinyproxy/tinyproxy.conf'
 TAIL_LOG='/var/log/tinyproxy/tinyproxy.log'
 
 # Usage: screenOut STATUS message
@@ -62,7 +62,7 @@ stopService() {
     screenOut "Checking for running Tinyproxy service..."
     if [ "$(pidof tinyproxy)" ]; then
         screenOut "Found. Stopping Tinyproxy service for pre-configuration..."
-        service tinyproxy stop
+        killall tinyproxy
         checkStatus $? "Could not stop Tinyproxy service." \
                        "Tinyproxy service stopped successfully."
     else
@@ -93,6 +93,11 @@ setMiscConfig() {
                    "Set MinSpareServers - Edited $PROXY_CONF successfully."
 }
 
+enableLogFile() {
+	touch /var/log/tinyproxy/tinyproxy.log
+	sed -i -e"s,^#LogFile,LogFile," $PROXY_CONF
+}
+
 setAccess() {
     if [[ "$1" == *ANY* ]]; then
         sed -i -e"s/^Allow /#Allow /" $PROXY_CONF
@@ -107,7 +112,7 @@ setAccess() {
 
 startService() {
     screenOut "Starting Tinyproxy service..."
-    service tinyproxy start
+    /usr/sbin/tinyproxy
     checkStatus $? "Could not start Tinyproxy service." \
                    "Tinyproxy service started successfully."
 }
@@ -132,6 +137,8 @@ stopService
 export rawRules="$@" && parsedRules=$(parseAccessRules $rawRules) && unset rawRules
 # Set ACL in Tinyproxy config
 setAccess $parsedRules
+# Enable log to file
+enableLogFile
 # Start Tinyproxy
 startService
 # Tail Tinyproxy log
