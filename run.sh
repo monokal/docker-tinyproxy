@@ -9,7 +9,7 @@
 
 # Global vars
 PROG_NAME='DockerTinyproxy'
-PROXY_CONF='/etc/tinyproxy.conf'
+PROXY_CONF='/etc/tinyproxy/tinyproxy.conf'
 TAIL_LOG='/var/log/tinyproxy/tinyproxy.log'
 
 # Usage: screenOut STATUS message
