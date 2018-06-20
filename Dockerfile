@@ -5,15 +5,14 @@
 # Usage:        docker build -t dannydirect/tinyproxy:latest .
 ###############################################################################
 
-FROM alpine:latest
+FROM alpine:3.7
 
-MAINTAINER Daniel Middleton <daniel-middleton.com>
+MAINTAINER Daniel Middleton <monokal.io>
 
-RUN apk update \
-    && apk add \
+RUN apk add --no-cache \
 	bash \
 	tinyproxy
 
-ADD run.sh /opt/docker-tinyproxy/run.sh
+COPY run.sh /opt/docker-tinyproxy/run.sh
 
 ENTRYPOINT ["/opt/docker-tinyproxy/run.sh"]
