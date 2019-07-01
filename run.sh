@@ -94,7 +94,6 @@ setMiscConfig() {
 }
 
 enableLogFile() {
-	touch /var/log/tinyproxy/tinyproxy.log
 	sed -i -e"s,^#LogFile,LogFile," $PROXY_CONF
 }
 
@@ -118,6 +117,7 @@ startService() {
 }
 
 tailLog() {
+    touch /var/log/tinyproxy/tinyproxy.log
     screenOut "Tailing Tinyproxy log..."
     tail -f $TAIL_LOG
     checkStatus $? "Could not tail $TAIL_LOG" \
