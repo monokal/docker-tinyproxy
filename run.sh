@@ -109,9 +109,16 @@ setAccess() {
     fi
 }
 
+setAuth() {
+    if [ -n "$BASIC_AUTH_USER"  ] && [ -n "$BASIC_AUTH_PASSWORD" ]; then
+        screenOut "Setting up basic auth credentials."
+        sed -i -e"s/#BasicAuth user password/BasicAuth $BASIC_AUTH_USER $BASIC_AUTH_PASSWORD/" $PROXY_CONF
+    fi
+}
+
 startService() {
     screenOut "Starting Tinyproxy service..."
-    /usr/sbin/tinyproxy
+    /usr/bin/tinyproxy
     checkStatus $? "Could not start Tinyproxy service." \
                    "Tinyproxy service started successfully."
 }
@@ -137,6 +144,8 @@ stopService
 export rawRules="$@" && parsedRules=$(parseAccessRules $rawRules) && unset rawRules
 # Set ACL in Tinyproxy config
 setAccess $parsedRules
+# Enable basic auth (if any)
+setAuth
 # Enable log to file
 enableLogFile
 # Start Tinyproxy
