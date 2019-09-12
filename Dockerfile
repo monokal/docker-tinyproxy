@@ -5,7 +5,7 @@
 # Usage:        docker build -t dannydirect/tinyproxy:latest .
 ###############################################################################
 
-FROM alpine:3.7
+FROM alpine:3.10
 
 MAINTAINER Daniel Middleton <monokal.io>
 
