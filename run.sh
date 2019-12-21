@@ -110,9 +110,9 @@ setAccess() {
 }
 
 setAuth() {
-    if [ -n "$BASIC_AUTH_USER"  ] && [ -n "$BASIC_AUTH_PASSWORD" ]; then
+    if [ -n "${BASIC_AUTH_USER}"  ] && [ -n "${BASIC_AUTH_PASSWORD}" ]; then
         screenOut "Setting up basic auth credentials."
-        sed -i -e"s/#BasicAuth user password/BasicAuth $BASIC_AUTH_USER $BASIC_AUTH_PASSWORD/" $PROXY_CONF
+        sed -i -e"s/#BasicAuth user password/BasicAuth ${BASIC_AUTH_USER} ${BASIC_AUTH_PASSWORD}/" $PROXY_CONF
     fi
 }
 
