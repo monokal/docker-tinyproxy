@@ -140,7 +140,7 @@ setFilter(){
     
     if [ -n "$Filter" ] ; then
             screenOut "Setting up Filter."
-            sed -i -e"s/#Filter "/etc/tinyproxy/filter"/#Filter \"$Filter\"/" $PROXY_CONF
+            sed -i -e"s/#Filter \"/etc/tinyproxy/filter\"/#Filter \"$Filter\"/" $PROXY_CONF
     fi
 
 }
