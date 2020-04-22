@@ -121,6 +121,28 @@ setFilter(){
         screenOut "Setting up FilterDefaultDeny."
         sed -i -e"s/#FilterDefaultDeny Yes/FilterDefaultDeny $FilterDefaultDeny/" $PROXY_CONF
     fi
+
+    if [ -n "$FilterURLs" ] ; then
+        screenOut "Setting up FilterURLs."
+        sed -i -e"s/#FilterURLs Yes/FilterURLs $FilterURLs/" $PROXY_CONF
+    fi
+    
+    if [ -n "$FilterExtended" ] ; then
+            screenOut "Setting up FilterExtended."
+            sed -i -e"s/#FilterExtended Yes/FilterExtended $FilterExtended/" $PROXY_CONF
+    fi
+    
+    if [ -n "$FilterCaseSensitive" ] ; then
+            screenOut "Setting up FilterCaseSensitive."
+            sed -i -e"s/#FilterCaseSensitive Yes/FilterCaseSensitive $FilterCaseSensitive/" $PROXY_CONF
+    fi
+    
+    
+    if [ -n "$Filter" ] ; then
+            screenOut "Setting up Filter."
+            sed -i -e"s/#Filter "/etc/tinyproxy/filter"/#Filter \"$Filter\"/" $PROXY_CONF
+    fi
+
 }
 
 startService() {
