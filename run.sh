@@ -116,6 +116,13 @@ setAuth() {
     fi
 }
 
+setFilter(){
+    if [ -n "$FilterDefaultDeny" ] ; then
+        screenOut "Setting up FilterDefaultDeny."
+        sed -i -e"s/#FilterDefaultDeny Yes/FilterDefaultDeny $FilterDefaultDeny/" $PROXY_CONF
+    fi
+}
+
 startService() {
     screenOut "Starting Tinyproxy service..."
     /usr/bin/tinyproxy
