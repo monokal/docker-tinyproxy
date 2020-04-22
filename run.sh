@@ -153,6 +153,8 @@ export rawRules="$@" && parsedRules=$(parseAccessRules $rawRules) && unset rawRu
 setAccess $parsedRules
 # Enable basic auth (if any)
 setAuth
+# Enable Filtering (if any)
+setFilter
 # Enable log to file
 enableLogFile
 # Start Tinyproxy
