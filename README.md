@@ -31,6 +31,13 @@ Usage:
 ##### Stats
 Navigating to `http://tinyproxy.stats/` while connected to the proxy will display the Tinyproxy Stats page.
 
+##### Filtering
+Any Tinyproxy filter setting such as FilterDefaultDeny can be set as an environment variable.  You can map a filter file on the parent file system into the container for the proxy instance to use.
+
+```
+        docker run -d --name='tinyproxy' -p 6666:8888 -v ~/filter-on-parent.conf:/etc/tinyproxy/filter.conf  --env Filter="/etc/tinyproxy/filter.conf" --env FilterDefaultDeny=Yes  dannydirect/tinyproxy:latest ANY
+```
+
 ### Contribute
 ---
 As always, contributions are appriciated. Simply open a Pull request.

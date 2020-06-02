@@ -116,6 +116,35 @@ setAuth() {
     fi
 }
 
+setFilter(){
+    if [ -n "$FilterDefaultDeny" ] ; then
+        screenOut "Setting up FilterDefaultDeny."
+        sed -i -e"s/#FilterDefaultDeny Yes/FilterDefaultDeny $FilterDefaultDeny/" $PROXY_CONF
+    fi
+
+    if [ -n "$FilterURLs" ] ; then
+        screenOut "Setting up FilterURLs."
+        sed -i -e"s/#FilterURLs Yes/FilterURLs $FilterURLs/" $PROXY_CONF
+    fi
+    
+    if [ -n "$FilterExtended" ] ; then
+            screenOut "Setting up FilterExtended."
+            sed -i -e"s/#FilterExtended Yes/FilterExtended $FilterExtended/" $PROXY_CONF
+    fi
+    
+    if [ -n "$FilterCaseSensitive" ] ; then
+            screenOut "Setting up FilterCaseSensitive."
+            sed -i -e"s/#FilterCaseSensitive Yes/FilterCaseSensitive $FilterCaseSensitive/" $PROXY_CONF
+    fi
+    
+    
+    if [ -n "$Filter" ] ; then
+            screenOut "Setting up Filter."
+            sed -i -e"s+#Filter \"/etc/tinyproxy/filter\"+Filter \"$Filter\"+" $PROXY_CONF
+    fi
+
+}
+
 startService() {
     screenOut "Starting Tinyproxy service..."
     /usr/bin/tinyproxy
@@ -146,6 +175,8 @@ export rawRules="$@" && parsedRules=$(parseAccessRules $rawRules) && unset rawRu
 setAccess $parsedRules
 # Enable basic auth (if any)
 setAuth
+# Enable Filtering (if any)
+setFilter
 # Enable log to file
 enableLogFile
 # Start Tinyproxy
