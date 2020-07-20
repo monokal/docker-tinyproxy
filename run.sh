@@ -145,6 +145,13 @@ setFilter(){
 
 }
 
+setTimeout() {
+    if [ -n "${TIMEOUT}"  ]; then
+        screenOut "Setting up Timeout."
+        sed -i -e"s/Timeout 600/Timeout ${TIMEOUT}/" $PROXY_CONF
+    fi
+}
+
 startService() {
     screenOut "Starting Tinyproxy service..."
     /usr/bin/tinyproxy
@@ -177,6 +184,8 @@ setAccess $parsedRules
 setAuth
 # Enable Filtering (if any)
 setFilter
+# Set Timeout (if any)
+setTimeout
 # Enable log to file
 enableLogFile
 # Start Tinyproxy
