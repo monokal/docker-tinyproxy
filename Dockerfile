@@ -1,7 +1,5 @@
 FROM alpine:3.10
 
-MAINTAINER Daniel Middleton <monokal.io>
-
 RUN apk add --no-cache \
 	bash \
 	tinyproxy
