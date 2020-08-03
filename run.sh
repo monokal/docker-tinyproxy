@@ -1,12 +1,5 @@
 #!/bin/bash
 
-###############################################################################
-# Name:         run.sh
-# Author:       Daniel Middleton <daniel-middleton.com>
-# Description:  Used as ENTRYPOINT from Tinyproxy's Dockerfile
-# Usage:        See displayUsage function
-###############################################################################
-
 # Global vars
 PROG_NAME='DockerTinyproxy'
 PROXY_CONF='/etc/tinyproxy/tinyproxy.conf'
