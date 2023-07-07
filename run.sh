@@ -8,7 +8,7 @@ TAIL_LOG='/var/log/tinyproxy/tinyproxy.log'
 # Usage: screenOut STATUS message
 screenOut() {
     timestamp=$(date +"%H:%M:%S")
-    
+
     if [ "$#" -ne 2 ]; then
         status='INFO'
         message="$1"
@@ -80,14 +80,14 @@ setMiscConfig() {
     sed -i -e"s,^MaxSpareServers ,MaxSpareServers\t1 ," $PROXY_CONF
     checkStatus $? "Set MinSpareServers - Could not edit $PROXY_CONF" \
                    "Set MinSpareServers - Edited $PROXY_CONF successfully."
-    
+
     sed -i -e"s,^StartServers ,StartServers\t1 ," $PROXY_CONF
     checkStatus $? "Set MinSpareServers - Could not edit $PROXY_CONF" \
                    "Set MinSpareServers - Edited $PROXY_CONF successfully."
 }
 
 enableLogFile() {
-	sed -i -e"s,^#LogFile,LogFile," $PROXY_CONF
+    sed -i -e"s,^#LogFile,LogFile," $PROXY_CONF
 }
 
 setAccess() {
@@ -119,18 +119,17 @@ setFilter(){
         screenOut "Setting up FilterURLs."
         sed -i -e"s/#FilterURLs Yes/FilterURLs $FilterURLs/" $PROXY_CONF
     fi
-    
+
     if [ -n "$FilterExtended" ] ; then
             screenOut "Setting up FilterExtended."
             sed -i -e"s/#FilterExtended Yes/FilterExtended $FilterExtended/" $PROXY_CONF
     fi
-    
+
     if [ -n "$FilterCaseSensitive" ] ; then
             screenOut "Setting up FilterCaseSensitive."
             sed -i -e"s/#FilterCaseSensitive Yes/FilterCaseSensitive $FilterCaseSensitive/" $PROXY_CONF
     fi
-    
-    
+
     if [ -n "$Filter" ] ; then
             screenOut "Setting up Filter."
             sed -i -e"s+#Filter \"/etc/tinyproxy/filter\"+Filter \"$Filter\"+" $PROXY_CONF
@@ -142,6 +141,13 @@ setTimeout() {
     if [ -n "${TIMEOUT}"  ]; then
         screenOut "Setting up Timeout."
         sed -i -e"s/Timeout 600/Timeout ${TIMEOUT}/" $PROXY_CONF
+    fi
+}
+
+setUpstream() {
+    if [ -n "${UPSTREAM_TYPE}" -a -n "${UPSTREAM_DEST}" ]; then
+        screenOut "Setting up Upstream."
+        sed -i -e"s/#Upstream http some.remote.proxy:port/Upstream ${UPSTREAM_TYPE} ${UPSTREAM_DEST}/" $PROXY_CONF
     fi
 }
 
@@ -179,6 +185,8 @@ setAuth
 setFilter
 # Set Timeout (if any)
 setTimeout
+# Set Upstream (if any)
+setUpstream
 # Enable log to file
 enableLogFile
 # Start Tinyproxy
